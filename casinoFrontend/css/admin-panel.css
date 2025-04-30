@@ -1,0 +1,136 @@
+:root {
+    --body-bg: #383838;
+    --sidebar-bg: #484848;
+    --header-bg: #424141;
+    --data-bg: #8D8787;
+}
+
+body {
+    font-family: "Open Sans", serif !important;
+    background-color: var(--body-bg);
+    color: white;
+}
+
+.sidebar {
+    background-color: var(--sidebar-bg);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.mobile-nav {
+    background-color: var(--sidebar-bg);
+    display: none;
+}
+
+.sidebar a, .mobile-nav a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.sidebar a:hover, .mobile-nav a:hover {
+    background-color: #585858;
+}
+
+.main-content {
+    padding: 20px;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 80px;
+    background-color: #424141;
+}
+
+.table {
+    color: white;
+}
+
+.table th {
+    background-color: var(--header-bg);
+    color: white;
+    border-color: #565656;
+}
+
+.table td {
+    background-color: var(--data-bg);
+    border-color: #565656;
+}
+
+.mobile-table td {
+    vertical-align: middle;
+}
+
+.save-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    border: 1px solid #424141 !important;
+}
+
+.modal-content {
+    background-color: var(--body-bg);
+    color: white;
+}
+
+.modal-header, .modal-footer {
+    border-color: #565656;
+}
+
+.form-control {
+    background-color: var(--data-bg);
+    border-color: #565656;
+    color: white;
+}
+
+.form-control:focus {
+    background-color: #9d9797;
+    color: white;
+}
+
+.navbar-toggler {
+    border-color: rgba(255,255,255,0.5);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.7%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+input
+{
+    background-color: #8D8787 !important;
+    color: white !important;
+}
+input::placeholder
+{
+    color: white !important;
+}
+@media (max-width: 768px) {
+    .desktop-table {
+        display: none;
+    }
+    .sidebar {
+        display: none;
+    }
+    .mobile-nav {
+        display: block;
+    }
+    .main-content {
+        margin-top: 60px;
+    }
+    .col-md-10 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-table {
+        display: none !important;
+    }
+    .mobile-nav {
+        display: none !important;
+    }
+}

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roulette Stats Modal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: white;
+            margin: 2% auto;
+            padding: 24px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 95vh;
+            overflow-y: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            position: absolute;
+            right: 24px;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close:hover {
+            color: #000;
+            background-color: #f5f5f5;
+        }
+
+        .modal-header {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-header h2 {
+            font-size: 24px;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .stats-container {
+            display: grid;
+            gap: 24px;
+        }
+
+        .stat-card {
+            background-color: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stat-title::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 16px;
+            background-color: #4F46E5;
+            border-radius: 2px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s;
+        }
+
+        .stat-item:hover {
+            transform: translateX(4px);
+        }
+
+        .stat-item span:first-child {
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .stat-item span:last-child {
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        .color-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        button.stats-button {
+            padding: 12px 24px;
+            background-color: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.1);
+        }
+
+        button.stats-button:hover {
+            background-color: #4338CA;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 40px;
+            margin: 20px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4F46E5;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            color: #e53e3e;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff5f5;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        /* Color styles for the stats */
+        .color-red { background-color: #e53e3e; }
+        .color-black { background-color: #1a1a1a; }
+        .color-green { background-color: #38a169; }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                max-height: 100%;
+                border-radius: 0;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="stats-button" onclick="openModal()">View Roulette Statistics</button>
+    <i class="fa-solid fa-chart-simple"></i>
+    <div id="statsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Advanced Roulette Statistics</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div id="statsContent" class="stats-container">
+                <div class="loading">Fetching statistics...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let stats = null;
+
+        async function fetchStats() {
+            try {
+                const response = await fetch('/api/roulette/stats');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+                return null;
+            }
+        }
+
+        function getColorClass(color) {
+            switch(color.toLowerCase()) {
+                case 'red': return 'color-red';
+                case 'black': return 'color-black';
+                case 'green': return 'color-green';
+                default: return '';
+            }
+        }
+
+        function renderStats(stats) {
+            const formatNumber = num => new Intl.NumberFormat().format(num);
+            
+            const content = `
+                <div class="stat-card">
+                    <div class="stat-title">Longest Color Streak</div>
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <span>
+                                <span class="color-indicator ${getColorClass(stats.colorStreaks[0].winColor)}"></span>
+                                ${stats.colorStreaks[0].winColor}
+                            </span>
+                            <span>${formatNumber(stats.colorStreaks[0].streak_length)} spins</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>Start Round</span>
+                            <span>#${formatNumber(stats.colorStreaks[0].start_roundid)}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>End Round</span>
+                            <span>#${formatNumber(stats.colorStreaks[0].end_roundid)}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">Most Frequent Numbers</div>
+                    <div class="stat-grid">
+                        ${stats.topNumbers.map(num => `
+                            <div class="stat-item">
+                                <span>Number ${num.winNumber}</span>
+                                <span>${formatNumber(num.count)} times</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">Color Distribution</div>
+                    <div class="stat-grid">
+                        ${stats.colorDistribution.map(color => `
+                            <div class="stat-item">
+                                <span>
+                                    <span class="color-indicator ${getColorClass(color.winColor)}"></span>
+                                    ${color.winColor}
+                                </span>
+                                <span>${formatNumber(color.count)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">Number Patterns</div>
+                    <div class="stat-grid">
+                        ${stats.evenOddDistribution.map(dist => `
+                            <div class="stat-item">
+                                <span>${dist.type.charAt(0).toUpperCase() + dist.type.slice(1)}</span>
+                                <span>${formatNumber(dist.count)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">Section Distribution</div>
+                    <div class="stat-grid">
+                        ${stats.sectionDistribution.map(section => `
+                            <div class="stat-item">
+                                <span>${section.section.toUpperCase()}</span>
+                                <span>${formatNumber(section.count)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">High/Low Distribution</div>
+                    <div class="stat-grid">
+                        ${stats.highLowDistribution.map(dist => `
+                            <div class="stat-item">
+                                <span>${dist.range_type.charAt(0).toUpperCase() + dist.range_type.slice(1)}</span>
+                                <span>${formatNumber(dist.count)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('statsContent').innerHTML = content;
+        }
+
+        async function openModal() {
+            document.getElementById('statsModal').style.display = 'block';
+            if (!stats) {
+                stats = await fetchStats();
+                if (stats) {
+                    renderStats(stats);
+                } else {
+                    document.getElementById('statsContent').innerHTML = 
+                        '<div class="error">Error loading statistics. Please try again later.</div>';
+                }
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('statsModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('statsModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

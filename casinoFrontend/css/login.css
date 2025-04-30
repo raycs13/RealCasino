@@ -1,0 +1,60 @@
+body
+{
+background-color: #383838;
+color: white;
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh; /* A teljes képernyő magasságát lefedi */
+}
+.logPanel
+{
+    width: 400px; /* Példa szélesség */
+    padding: 20px;
+}
+h2
+{
+    margin-bottom: 25px;  
+    font-size: 22px;
+}
+input
+{
+    border: #b0b3b8 !important;
+    outline: none;
+    width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: #b8bbbf !important;
+}
+input:focus
+{
+    background-color: #9ea0a3 !important;
+}
+#loginBt,#regBt
+{
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: #b8bbbf;
+    border: 1px solid black;
+    font-size: 24px;
+    font-weight: 500;
+}
+#loginBt:hover, #regBt:hover
+{
+    background-color: #9ea0a3;
+}
+a
+{
+    color: white;
+    text-decoration: none;
+}
+a:hover
+{
+    color: #8D8787;
+    text-decoration: underline;
+}

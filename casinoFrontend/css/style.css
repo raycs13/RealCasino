@@ -1,0 +1,647 @@
+body
+{
+background-color: #383838;
+font-family: "Open Sans", serif;
+}
+.roulette-wrapper{
+    position:relative;
+    display:flex;
+    justify-content: center;
+    width:150%;
+    margin:0 auto;
+    overflow:hidden;
+  }
+  
+.roulette-wrapper .selector{
+    width:3px;
+    background:grey;
+    left:50%;
+    height:100%;
+    transform:translate(-50%,0%);
+    position:absolute;
+    z-index:2;
+  }
+  
+.roulette-wrapper .wheel{
+    display:flex;
+  }
+  
+.roulette-wrapper .wheel .rowRoulette{
+    display:flex;
+  }
+  
+.roulette-wrapper .wheel .rowRoulette .card{
+    height:75px;
+    width:75px;
+    margin:3px;
+    border-radius:8px;
+    border-bottom:3px solid rgba(0,0,0,0.2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:1.5em;
+  }
+  .stats-button {
+    transition: all 0.3s ease;
+}
+
+.stats-button.available {
+    background-color: #ffc107;
+    animation: pulse 2s infinite;
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+  
+.card.red{
+    background:#9D0505;
+  }
+  
+.card.black{
+    background:#1f1c1c;
+  }
+  
+.card.green{
+    background:#00C74D;
+  }
+  
+*{
+    box-sizing:border-box;
+}
+  
+.container 
+{
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+}
+nav
+{
+    background-color: #484848;
+}
+.navbar-nav .nav-link
+{
+    color: white;
+    padding: 20px;
+}
+.logoutBt
+{
+    background-color: #393838;
+    color: white;
+    font-weight: 500;
+    border-radius: 1rem;
+    font-size: 1.2rem;
+    box-shadow: none;
+    border: none;
+    padding: 12px 20px 12px 20px;
+}
+.logoutBt:hover
+{
+    color: black;
+    border: 1px solid white;
+    transform: scale(1.05);
+}
+.logoutBt:hover i
+{
+    color: white;
+}
+.logoutBt i
+{
+    margin-right: 10px;
+    color: black;
+}
+.navbar-collapse li
+{
+    margin-right: 30px;
+    font-size: 20px;
+}
+.navbar-collapse a:hover
+{
+    font-weight: 500;
+    transform: scale(1.2);
+}
+.chat
+{
+    align-items: center; 
+    margin-right: 20px;    
+    margin-left: 1%;
+    width: 400px;
+    height: 800px;
+    left: 10px;
+}
+.chatbox
+{
+    height: 700px;
+    width: 400px;
+    border: 1px solid black;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column; /* A tartalmat függőlegesen rendezi */
+    gap: 10px; /* Köz tartalmi elemek között */
+    padding: 10px; /* Távolság a szöveg és a szélek között */
+}
+.chatroom button
+{
+    border-radius: 10px;
+    width: 400px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #8D8787;
+    text-align: start;
+    color: black;
+    box-shadow: none;
+    border: none;
+}
+.chatbox
+{
+    background-color: #484848;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: 0px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Függőleges görgetést engedélyez */
+}
+/* Görgetősáv stílusok */
+.chatbox::-webkit-scrollbar {
+    width: 8px; /* Görgetősáv szélessége */
+}
+
+.chatbox::-webkit-scrollbar-track {
+    background: #383838; /* Görgetősáv háttérszíne */
+}
+
+.chatbox::-webkit-scrollbar-thumb {
+    background-color: #8D8787; /* Görgetősáv "fogantyújának" színe */
+    border-radius: 10px; /* Lekerekített szélek */
+    border: 2px solid #333; /* Kis térköz a fogantyú körül */
+}
+
+.chatbox::-webkit-scrollbar-thumb:hover {
+    background-color: #bdbdbd; /* Fogantyú színe hover állapotban */
+}
+.message
+{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    word-wrap: break-word;
+    max-width: 95%;
+    white-space: normal;
+}
+#chatUsername, #chatMessage
+{
+    display: inline;
+}
+#chatUsername
+{
+    color: #8D8787;
+    font-weight: 500;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    /*text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;*/
+}
+#chatMessage
+{
+    background-color: grey;
+    padding: .5rem;
+    border-radius: 1rem;
+    color: white;
+    text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    max-width: 95%;
+    
+}
+.chatinput input
+{
+    border-radius: .7rem;
+    width: 380px;
+    margin: 0 auto; 
+    background-color: #8D8787;
+    color: white;
+    padding: 12px 20px 12px 20px;
+    outline: none;   
+    border: none;         
+    box-shadow: none;     
+    margin-top: 0.6rem;
+}
+.chatinput input::placeholder
+{
+    color: white;
+}
+.roulette
+{
+    display: flex;             
+    justify-content: center;
+    margin: 3rem 4rem 1rem 4rem;
+    width: 1200px;
+}
+.roulette div
+{
+    width: 100px;
+    height: 100px;
+    display: flex;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+.roulette .red
+{
+    background-color: red;
+    border-radius:8px;
+}
+.roulette .black
+{
+    background-color: #1f1c1c;
+}
+.roulette .green
+{
+    background-color: #047223;
+}
+.roulette span
+{
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-left: 10px;
+}
+.prevColors
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-left: 50%;
+    margin-right: auto;
+}
+
+.prevStyle
+{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    border-bottom: solid rgba(0,0,0,0.2);
+}
+.prevColors .red
+{
+    background-color: #9D0505;
+}
+.prevColors .black
+{
+    background-color: #1f1c1c;
+}
+.prevColors .green
+{
+    background-color: #00C74D;
+}
+.betButtons
+{
+    background-color: #424141;
+    width: 1200px;
+    margin: 2rem 4rem 1rem 4rem;
+    padding-bottom: 2rem;
+}
+.betButtons p
+{
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    padding-top: 1.5rem;
+    margin: 0rem 0rem 0rem 3rem;
+}
+.betButtons .buttons
+{
+    display: flex;
+    align-items: stretch;
+    background-color: #8D8787;
+    border-radius: 20px;
+    width: 460px;
+    height: 50px;
+    margin-left: 2rem;
+}
+.betButtons .buttons button
+{
+    justify-content: center;
+    border: none;
+    background-color: #8D8787;
+    color: white;
+    font-weight: 500;
+    margin-left: 1rem;
+    font-size: 1rem;
+    box-shadow: none;
+    margin-right: .5rem;
+}
+.betButtons .buttons .button
+{
+    display: flex;
+    align-items: center;
+    border-right: 1px solid black; /* Szegély a div-en */
+}
+.noBorderBt
+{
+    border: none !important;
+}
+.betCards
+{
+    display: flex;
+    width: 1200px;
+    margin: 2rem 4rem 1rem 4rem;
+}
+.betCard
+{
+    justify-content: center;
+    align-items: center;
+}
+.betHead
+{
+    background-color: #424141;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 15px;
+}
+.customrow
+{
+    display: flex; /* Flexbox aktiválása, de ez már alapértelmezetten aktív a Bootstrap-ben */
+  align-items: center; /* Kép és szöveg függőleges középre igazítása */
+  justify-content: center; /* Kép és szöveg vízszintes középre igazítása */
+}
+.profile-pic img
+{
+    height: 40px;
+    width: 40px;
+    background-color: grey;
+    border: 1px solid white;
+    border-radius:50%;
+    display: flex; /* Flexbox a képre is */
+    align-items: center; /* Kép függőleges középre igazítása */
+    justify-content: center; /* Kép vízszintes középre igazítása */
+}
+.betCard .betHead button
+{
+    width: 350px;
+    height: 45px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+.betBody
+{
+    background-color: #484848;
+    border-top: 1px solid #424141;
+    color: white;
+}
+.betUserName, .betAmount
+{
+    display: flex; /* Flexbox aktiválása a szöveghez */
+    align-items: center; /* Függőleges középre igazítás */
+    justify-content: center; /* Vízszintes középre igazítás */
+    text-align: center; /* Szöveg középre igazítása */
+}
+.betBody p
+{
+    justify-content: center;
+}
+.totalBetAmount
+{
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+.betData
+{
+    border-top: 3px solid #424141;
+    height: 65px;
+}
+.profile-pic
+{
+    margin-left: 1.5rem;
+    
+}
+.betUserName
+{
+    margin-left: 1.5rem;
+}
+.betAmount
+{
+    text-align: right;
+    margin-right: 1.5rem;
+}
+.betCard p
+{
+    line-height: 45px;
+}
+.redButton
+{
+    background-color: #9D0505;
+}
+.greenButton
+{
+    background-color: #00C74D;
+}
+.blackButton
+{
+    background-color: #1f1c1c;
+}
+.betPlace input
+{
+    border-radius: 20px;
+    background-color: #8D8787;
+    border: none;
+    height: 40px;
+    width: 600px;
+    margin: 1rem 0rem 0rem 2rem;
+    -moz-appearance: textfield;
+    -webkit-appearance: none; 
+    appearance: textfield; 
+    padding-left: 1rem;
+    text-align: left;
+}
+.no-spin::-webkit-inner-spin-button, 
+.no-spin::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.betPlace input::placeholder
+{
+    padding: .3rem;
+    color: #4A4A4A;
+}
+#countdown
+{
+    font-size: 3vh;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 50%;
+    margin-right: auto;
+}
+@media screen and (max-width: 1000px) 
+{
+    .mobileHide
+    {
+        position: absolute; /* Kiveszi a normál flow-ból */
+        left: -9999px; /* Messze eltolja az ablakból */
+    }
+    .chat
+    {
+        display: none;
+    }
+
+    .betPlace input
+    {
+        width: 300px;
+    }
+    .betButtons
+    {
+        width: 800px;
+        margin: 0;
+    }
+    .betButtons p 
+    {
+        font-size: 18px;
+    } 
+    .betButtons button
+    {
+        padding: 6px 12px !important;
+    }
+    .betButtonsDiv
+    {
+        display: flex;
+        justify-content: center;
+    }
+    .buttonsForMobile
+    {
+        display: block !important;
+    }
+    .betCards
+    {
+        width: 100%;
+        margin: 0;
+    }
+    .betCardsDiv
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .betCard .betHead button
+    {
+        width: 100%;
+    }
+    .betButtons .buttons
+    {
+        width: 385px;
+    }
+    .roulette-wrapper
+    {
+        width: 800px;
+    }
+    .loginbt
+    {
+        display: none;
+        position: absolute; /* Kiveszi a normál flow-ból */
+        left: -9999px; /* Messze eltolja az ablakból */
+    }
+}
+@media screen and (max-width: 938px)
+{
+    #countdown
+    {
+        margin-left: 0;
+    }
+}
+@media screen and (max-width: 900px)
+{
+    .roulette-wrapper
+    {
+        width: 700px;
+    }
+    .betButtons
+    {
+        width: 700px;
+    }
+    .betCards
+    {
+        width: 700px;
+        justify-content: center;
+        align-items: center;
+    }
+    .betCard .betHead button
+    {
+        width: 600px;
+    }
+    .prevColors
+    {
+        margin-left: 100px;
+    }
+}
+@media screen and (max-width: 500px) 
+{
+    .betButtons
+    {
+        width: 300px;
+    }
+    .betPlace input
+    {
+        width: 150px;
+    }
+    .betCards
+    {
+        width: 300px;
+    }
+    .betCard .betHead button
+    {
+        width: 175px;
+    }
+    .betButtons .buttons
+    {
+        display: none;
+    }
+    .prevColors
+    {
+        display: none;
+    }
+    .roulette-wrapper
+    {
+        width: 80%;
+    }
+    .container
+    {
+        margin: 0 !important;
+    }
+}

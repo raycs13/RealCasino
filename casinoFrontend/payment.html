@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <title>Add Balance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/alert.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #383838;
+            color: #f5f5f5;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+        
+        /* Back Arrow Styles */
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            transition: transform 0.2s ease;
+        }
+        
+        .back-arrow:hover {
+            transform: translateX(-5px);
+        }
+        
+        .back-arrow svg {
+            margin-right: 8px;
+        }
+        
+        /* Content Container */
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .payment-container {
+            width: 100%;
+            max-width: 450px;
+        }
+        
+        .payment-form {
+            background-color: #424242;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .payment-form:hover {
+            transform: translateY(-5px);
+        }
+        
+        h2 {
+            color: #ffffff;
+            font-size: 28px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #cccccc;
+        }
+        
+        select {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            background-color: #525252;
+            color: white;
+            border-radius: 8px;
+            font-size: 16px;
+            appearance: none;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        
+        select:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #1a73e8;
+        }
+        
+        #card-element {
+            padding: 15px;
+            background-color: #525252;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .error {
+            color: #ff6b6b;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .btn-container {
+            text-align: center;
+        }
+        
+        button {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #1a73e8, #0d47a1);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background: linear-gradient(135deg, #0d47a1, #1a73e8);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+        }
+        
+        button:disabled {
+            background: #777777;
+            transform: none;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        
+        .amount-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .amount-option {
+            padding: 12px;
+            background-color: #525252;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .amount-option:hover {
+            background-color: #5a5a5a;
+        }
+        
+        .amount-option.selected {
+            border-color: #1a73e8;
+            background-color: rgba(26, 115, 232, 0.1);
+        }
+        
+        .amount-value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .amount-label {
+            font-size: 12px;
+            color: #bbbbbb;
+            margin-top: 4px;
+        }
+        
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 25px;
+            color: #aaaaaa;
+            font-size: 14px;
+        }
+        
+        .secure-badge svg {
+            margin-right: 6px;
+        }
+    </style>
+</head>
+<body>
+    <a href="main.html" class="back-arrow">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 12H5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 19L5 12L12 5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back
+    </a>
+
+    <div class="content">
+        <div class="payment-container">
+            <div class="payment-form">
+                <h2>Add Balance</h2>
+                
+                <div class="form-group">
+                    <label for="amount">Select Amount</label>
+                    <div class="amount-options">
+                        <div class="amount-option" data-value="1000">
+                            <div class="amount-value">$10.00</div>
+                            <div class="amount-label">Basic</div>
+                        </div>
+                        <div class="amount-option" data-value="2000">
+                            <div class="amount-value">$20.00</div>
+                            <div class="amount-label">Standard</div>
+                        </div>
+                        <div class="amount-option" data-value="5000">
+                            <div class="amount-value">$50.00</div>
+                            <div class="amount-label">Premium</div>
+                        </div>
+                        <div class="amount-option" data-value="10000">
+                            <div class="amount-value">$100.00</div>
+                            <div class="amount-label">Elite</div>
+                        </div>
+                    </div>
+                    <select id="amount" style="display: none;">
+                        <option value="1000">$10.00</option>
+                        <option value="2000">$20.00</option>
+                        <option value="5000">$50.00</option>
+                        <option value="10000">$100.00</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="card-element">Card Details</label>
+                    <div id="card-element"></div>
+                    <div id="card-errors" class="error"></div>
+                </div>
+                
+                <div class="btn-container">
+                    <button id="submit">Add Balance</button>
+                </div>
+                
+                <div class="secure-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z" fill="#aaaaaa"/>
+                        <path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Secure payment processing by Stripe
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const stripe = Stripe('pk_test_51QiCjECij0cx0S28OU5V9F639E8kpWCHLO3Q3jW13HlXUzV0DHO1bKYrqMNjiReiCpT6D3kLhN6uOCFhOozWqPkh00hLk7uB1n'); // Replace with your Stripe publishable key
+        const elements = stripe.elements();
+        
+        const cardStyle = {
+            base: {
+                color: '#ffffff',
+                fontFamily: '"Segoe UI", "Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4'
+                }
+            },
+            invalid: {
+                color: '#ff6b6b',
+                iconColor: '#ff6b6b'
+            }
+        };
+        
+        const card = elements.create('card', {style: cardStyle});
+        card.mount('#card-element');
+
+        const submitBtn = document.getElementById('submit');
+        const errorDiv = document.getElementById('card-errors');
+        
+        // Handle the amount selection
+        const amountOptions = document.querySelectorAll('.amount-option');
+        const amountSelect = document.getElementById('amount');
+        
+        amountOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove selection from all options
+                amountOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selection to clicked option
+                option.classList.add('selected');
+                
+                // Update the hidden select value
+                amountSelect.value = option.dataset.value;
+                //console.log(option.dataset.value)
+            });
+        });
+        
+        // Set the first option as selected by default
+        amountOptions[0].classList.add('selected');
+
+        card.addEventListener('change', ({error}) => {
+            if (error) {
+                errorDiv.textContent = error.message;
+            } else {
+                errorDiv.textContent = '';
+            }
+        });
+
+        submitBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+
+            const amount = amountSelect.value;
+            console.log(amount)
+            try {
+                // Create payment intent
+                const response = await fetch('http://34.51.132.126:3000/api/create-payment-intent', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ amount: parseInt(amount) })
+                });
+
+                const data = await response.json();
+
+                // Confirm payment
+                const result = await stripe.confirmCardPayment(data.clientSecret, {
+                    payment_method: {
+                        card: card,
+                        billing_details: {
+                            name: 'Test User'
+                        }
+                    }
+                });
+
+                if (result.error) {
+                    errorDiv.textContent = result.error.message;
+                } else {
+                    // Payment successful, update balance
+                    const updateResponse = await fetch('http://34.51.132.126:3000/api/update-balance', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({ amount: parseInt(amount) })
+                    });
+
+                    const updateData = await updateResponse.json();
+                    
+                    if (updateResponse.ok) {
+                        showAlert('Payment successful! Balance updated.', 'success');
+                        // Update balance display if it exists
+                        if (window.updateBalance) {
+                            window.updateBalance();
+                        }
+                        setTimeout(() => {
+                        window.location.href = '../main.html';
+                        }, 2000);    
+                    } else {
+                        throw new Error(updateData.error || 'Failed to update balance');
+                    }
+                }
+            } catch (error) {
+                console.error('Payment error:', error);
+                showAlert(`${error.message}`, 'error');
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Add Balance';
+        });
+    </script>
+    <script src="./js/alert.js"></script>
+</body>
+</html>
