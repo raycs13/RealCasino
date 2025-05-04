@@ -7,7 +7,7 @@
 
 ## 📋 Tartalomjegyzék
 
-- [A projektről](#a-projektről)
+- [A projektről](#a-projektrol)
 - [Főbb funkciók](#főbb-funkciók)
 - [Technológiai stack](#technológiai-stack)
 - [Adatbázis struktúra](#adatbázis-struktúra)
