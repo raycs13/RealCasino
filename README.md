@@ -7,7 +7,7 @@
 
 ## 📋 Tartalomjegyzék
 
-- [A projektről](#a-projektrol)
+- [A projektről](#projekt)
 - [Főbb funkciók](#főbb-funkciók)
 - [Technológiai stack](#technológiai-stack)
 - [Adatbázis struktúra](#adatbázis-struktúra)
@@ -20,6 +20,7 @@
 - [Tesztelés](#teszteles)
 - [Jövőbeli fejlesztések](#jövőbeli-fejlesztések)
 
+<a id="projekt"></a>
 ## 🎯 A projektről
 
 A RealCasino egy webalapú kaszinó platform, amely valós idejű játékokat, felhasználói fiókokat, chat funkcionalitást és fizetési feldolgozást kínál. Az alkalmazás interaktív rulett játékot biztosít fogadási mechanikával, felhasználói profil kezeléssel és adminisztrációs eszközökkel. A platform modern webtechnológiákkal készült, és moduláris architektúrát követ a könnyebb karbantarthatóság és skálázhatóság érdekében.
