@@ -17,7 +17,7 @@
 - [Socket.IO események](#socketio-események)
 - [Biztonsági funkciók](#biztonsági-funkciók)
 - [Használt függőségek](#használt-függőségek)
-- [Tesztelés](#tesztelés)
+- [Tesztelés](#teszteles)
 - [Jövőbeli fejlesztések](#jövőbeli-fejlesztések)
 
 ## 🎯 A projektről
