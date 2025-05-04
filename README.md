@@ -83,7 +83,7 @@ project-root/
 │   ├── profile.js            # Profil kezelési útvonalak
 │   ├── payments.js           # Fizetés-feldolgozási útvonalak
 │   └── game.js               # Játékkal kapcsolatos útvonalak
-├── controllers/              # Üzleti logika
+├── controllers/              # Kezelők és vezérlő logika
 │   ├── authController.js     # Hitelesítési logika
 │   ├── userController.js     # Felhasználó-kezelés
 │   ├── profileController.js  # Profil kezelés
