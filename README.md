@@ -8,23 +8,24 @@
 ## 📋 Tartalomjegyzék
 
 - [A projektről](#projekt)
-- [Főbb funkciók](#főbb-funkciók)
-- [Technológiai stack](#technológiai-stack)
-- [Adatbázis struktúra](#adatbázis-struktúra)
-- [Projekt struktúra](#projekt-struktúra)
-- [Környezeti változók](#környezeti-változók)
-- [API végpontok](#api-végpontok)
-- [Socket.IO események](#socketio-események)
-- [Biztonsági funkciók](#biztonsági-funkciók)
-- [Használt függőségek](#használt-függőségek)
-- [Tesztelés](#teszteles)
-- [Jövőbeli fejlesztések](#jövőbeli-fejlesztések)
+- [Főbb funkciók](#funkciok)
+- [Technológiai stack](#tech-stack)
+- [Adatbázis struktúra](#adatbazis)
+- [Projekt struktúra](#struktura)
+- [Környezeti változók](#env)
+- [API végpontok](#api)
+- [Socket.IO események](#socket)
+- [Biztonsági funkciók](#biztonsag)
+- [Használt függőségek](#fuggosegek)
+- [Tesztelés](#teszt)
+- [Jövőbeli fejlesztések](#jovo)
 
 <a id="projekt"></a>
 ## 🎯 A projektről
 
 A RealCasino egy webalapú kaszinó platform, amely valós idejű játékokat, felhasználói fiókokat, chat funkcionalitást és fizetési feldolgozást kínál. Az alkalmazás interaktív rulett játékot biztosít fogadási mechanikával, felhasználói profil kezeléssel és adminisztrációs eszközökkel. A platform modern webtechnológiákkal készült, és moduláris architektúrát követ a könnyebb karbantarthatóság és skálázhatóság érdekében.
 
+<a id="funkciok"></a>
 ## ✨ Főbb funkciók
 
 - **🎮 Valós idejű rulett játék**: Interaktív rulett fogadási rendszerrel
@@ -35,14 +36,15 @@ A RealCasino egy webalapú kaszinó platform, amely valós idejű játékokat, f
 - **⚙️ Admin panel**: Felhasználó-kezelési eszközök adminisztrátorok számára
 - **📱 Reszponzív dizájn**: Asztali és mobileszközökön egyaránt működik
 
+<a id="tech-stack"></a>
 ## 🛠️ Technológiai stack
 
 ### Backend
 - Node.js
 - Express
-- Socket.IO (valós idejű kommunikáció)
-- MySQL (adatbázis)
-- JSON Web Tokens (hitelesítés)
+- Socket.IO
+- MySQL
+- JSON Web Tokens
 
 ### Frontend
 - HTML5/CSS3
@@ -50,6 +52,7 @@ A RealCasino egy webalapú kaszinó platform, amely valós idejű játékokat, f
 - Bootstrap
 - jQuery
 
+<a id="adatbazis"></a>
 ## 🗄️ Adatbázis struktúra
 
 Az alkalmazás MySQL adatbázist használ a következő táblákkal:
@@ -63,6 +66,7 @@ Az alkalmazás MySQL adatbázist használ a következő táblákkal:
 | **payouts** | Nyeremények nyilvántartása | roundid, userid, payout |
 | **messages** | Chat üzenetek | message_id, user_id, message, created_at |
 
+<a id="struktura"></a>
 ## 📂 Projekt struktúra
 
 ```
@@ -103,7 +107,7 @@ project-root/
     └── admin-panel.html      # Admin vezérlőpult
 ```
 
-
+<a id="env"></a>
 ## 🔧 Környezeti változók
 
 Az alkalmazás a következő környezeti változókat igényli:
@@ -133,6 +137,7 @@ STRIPE_SECRET_KEY=your_stripe_secret_key
 BASE_URL=http://localhost:3000
 ```
 
+<a id="api"></a>
 ## 🌐 API végpontok
 
 ### Hitelesítési útvonalak
@@ -170,6 +175,7 @@ BASE_URL=http://localhost:3000
 - **GET** `/api/roulette/stats`: Rulett játék statisztikák lekérése
 - **POST** `/api/place-bet`: Fogadás elhelyezése
 
+<a id="socket"></a>
 ## 📡 Socket.IO események
 
 ### Chat
@@ -190,15 +196,16 @@ BASE_URL=http://localhost:3000
 - `balance_update`: Egyenleg változás értesítés
 - `update_previous_spins`: Előző pörgetések előzményei
 
+<a id="biztonsag"></a>
 ## 🔒 Biztonsági funkciók
 
 - JWT token alapú hitelesítés
 - Jelszó hashelés bcrypt-tel
-- HTTP-only cookie-k
 - Bemenet validáció validator.js segítségével
 - Sebességkorlátozás érzékeny végpontokon
 - Fájl feltöltési korlátozások és validáció
 
+<a id="fuggosegek"></a>
 ## 📦 Használt függőségek
 
 ```json
@@ -224,10 +231,12 @@ BASE_URL=http://localhost:3000
 }
 ```
 
+<a id="teszt"></a>
 ## 🧪 Tesztelés
 
 A projekt Postmannel tesztelhető az API végpontok esetében, és normál böngészőteszteléssel a frontend felületek esetében.
 
+<a id="jovo"></a>
 ## 🔮 Jövőbeli fejlesztések
 
 - További kaszinó játékok implementálása (játékgépek, blackjack, póker)
